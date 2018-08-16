@@ -7,8 +7,8 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 @StateStrategyType(SkipStrategy.class)
 interface TitleView extends MvpView {
 
-    void showPictures();
-
     void showPage();
+
+    void showViewer();
 
 }

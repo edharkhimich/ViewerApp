@@ -6,8 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.webkit.WebView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -16,22 +15,23 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import kdevgroup.com.viewerapp.R;
 import kdevgroup.com.viewerapp.common.FragmentFactory;
+import kdevgroup.com.viewerapp.common.ViewerWebClient;
 import kdevgroup.com.viewerapp.viewer.ViewerFragment;
-import kdevgroup.com.viewerapp.web.WebClientFragment;
+
+import static kdevgroup.com.viewerapp.common.Constants.BASE;
 
 public class TitleFragment extends MvpAppCompatFragment implements TitleView {
+
+    @BindView(R.id.titleWbVw)
+    WebView webView;
 
     @InjectPresenter
     TitlePresenter presenter;
 
-    @BindView(R.id.toolbarTxtV)
-    TextView toolbarTxtV;
+    private ViewerWebClient.WebClientErrorListener listener = ()
+            -> presenter.getViewState().showViewer();
 
-    @BindView(R.id.titleFirstContainer)
-    ImageView firstContainer;
-
-    @BindView(R.id.titleSecContainer)
-    ImageView secondContainer;
+    private ViewerWebClient webClient = new ViewerWebClient(listener);
 
     public TitleFragment() {
     }
@@ -41,19 +41,19 @@ public class TitleFragment extends MvpAppCompatFragment implements TitleView {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_title, container, false);
         ButterKnife.bind(this, v);
-        toolbarTxtV.setText(getString(R.string.toolbar_title));
         return v;
     }
 
     @Override
-    public void showPictures() {
-        secondContainer.setOnClickListener(v -> FragmentFactory.changeFragment(getFragmentManager(), R.id.container,
-                new ViewerFragment(), true, null));
+    public void showPage() {
+        webView.setWebViewClient(webClient);
+        webView.loadUrl(BASE);
     }
 
     @Override
-    public void showPage() {
-        firstContainer.setOnClickListener(v -> FragmentFactory.changeFragment(getFragmentManager(), R.id.container,
-                new WebClientFragment(), false, null));
+    public void showViewer() {
+        FragmentFactory.changeFragment(getFragmentManager(),
+                R.id.container, new ViewerFragment(), false, null);
     }
 }
+

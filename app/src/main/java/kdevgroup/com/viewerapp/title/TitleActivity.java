@@ -12,9 +12,6 @@ import kdevgroup.com.viewerapp.common.FragmentFactory;
 public class TitleActivity extends AppCompatActivity {
     boolean doubleBackToExitPressedOnce = false;
 
-    @BindView(R.id.toolbarTxtV)
-    TextView toolbarTxtV;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

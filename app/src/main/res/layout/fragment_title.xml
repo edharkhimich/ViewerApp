@@ -4,22 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
-
-    <ImageView
-        android:id="@+id/titleFirstContainer"
+    <WebView
+        android:id="@+id/titleWbVw"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/back2"
-        android:layout_marginBottom="4dp"/>
-
-    <ImageView
-        android:id="@+id/titleSecContainer"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/back"
-        android:layout_marginTop="4dp"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>
