@@ -24,8 +24,6 @@ public class TitleActivity extends AppCompatActivity {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             return;
-        } else {
-            FragmentFactory.changeFragment(getSupportFragmentManager(), R.id.container, new TitleFragment(), false, null);
         }
 
         doubleBackToExitPressedOnce = true;
