@@ -1,13 +1,18 @@
 package kdevgroup.com.viewerapp.common;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
-import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import static kdevgroup.com.viewerapp.common.Constants.BASE;
 
 public class ViewerWebClient extends WebViewClient {
 
@@ -17,10 +22,13 @@ public class ViewerWebClient extends WebViewClient {
         this.listener = listener;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
-    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-        listener.openViewer();
+    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        if (url.startsWith("tel:")) {
+            Intent intent = new Intent(Intent.ACTION_DIAL,
+                    Uri.parse(url));
+            view.getContext().startActivity(intent);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

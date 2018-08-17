@@ -1,8 +1,11 @@
 package kdevgroup.com.viewerapp.title;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +45,26 @@ public class TitleFragment extends MvpAppCompatFragment implements TitleView {
         View v = inflater.inflate(R.layout.fragment_title, container, false);
         ButterKnife.bind(this, v);
         return v;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        webView.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                WebView webView = (WebView) v;
+
+                switch (keyCode) {
+                    case KeyEvent.KEYCODE_BACK:
+                        if (webView.canGoBack()) {
+                            webView.goBack();
+                            return true;
+                        }
+                        break;
+                }
+            }
+
+            return false;
+        });
     }
 
     @Override
