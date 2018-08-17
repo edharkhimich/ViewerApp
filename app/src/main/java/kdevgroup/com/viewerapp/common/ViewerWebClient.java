@@ -26,8 +26,7 @@ public class ViewerWebClient extends WebViewClient {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
-        Log.d("mlogs", "onReceivedError: " + errorResponse.getStatusCode());
-        if (errorResponse.getStatusCode() == 503 || errorResponse.getStatusCode() == 404) {
+        if (errorResponse.getStatusCode() == 503) {
             listener.openViewer();
         }
     }
